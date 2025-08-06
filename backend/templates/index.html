@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeLitmus - Code Quality Analyzer 🧪</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .tab-container {
+            margin-bottom: 30px;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            background: #27ae60;
+        }
+        
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .tab.active:hover {
+            background: #2ecc71;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            text-align: left;
+        }
+        
+        #result h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        #result ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        #result li {
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 CodeLitmus - Code Quality Analyzer</h1>
+        
+        <div class="tab-container">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('upload')">📁 Upload File</button>
+                <button class="tab" onclick="switchTab('analyze')">🔍 Analyze Code</button>
+            </div>
+            
+            <!-- Upload Tab -->
+            <div id="upload" class="tab-content active">
+                <h2>Upload Your File</h2>
+                <form action="/upload" enctype="multipart/form-data" method="post">
+                    <input type="file" name="file" required>
+                    <button type="submit">Upload</button>
+                </form>
+                {% if message %}
+                    <p class="message">{{ message }}</p>
+                {% endif %}
+            </div>
+            
+            <!-- Analyze Tab -->
+            <div id="analyze" class="tab-content">
+                <h2>Analyze Code Quality</h2>
+                <input type="file" id="codeFile" accept=".py,.js,.ts,.java,.cpp,.c,.cs" required>
+                <button onclick="analyzeCode()">Analyze Code</button>
+                <div id="result"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+        
+        async function analyzeCode() {
+            const file = document.getElementById('codeFile').files[0];
+            if (!file) {
+                document.getElementById("result").innerHTML = '<p class="error">Please select a file first.</p>';
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append("file", file);
+            
+            try {
+                document.getElementById("result").innerHTML = '<p style="text-align: center;">Analyzing...</p>';
+                
+                const res = await fetch("/analyze/", {
+                    method: "POST",
+                    body: formData
+                });
+                
+                const data = await res.json();
+                
+                if (res.ok) {
+                    const verdictColor = data.verdict === 'Basic' ? 'green' : 
+                                       data.verdict === 'Neutral' ? 'orange' : 'red';
+                    
+                    document.getElementById("result").innerHTML = `
+                        <h2>Verdict: <span style="color:${verdictColor}">${data.verdict}</span></h2>
+                        <p><strong>Score:</strong> ${data.score}</p>
+                        <p><strong>Feedback:</strong></p>
+                        <ul>${data.feedback.map(f => `<li>• ${f}</li>`).join('')}</ul>
+                    `;
+                } else {
+                    document.getElementById("result").innerHTML = `<p class="error">Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                document.getElementById("result").innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
