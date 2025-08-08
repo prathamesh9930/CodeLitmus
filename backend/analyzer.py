@@ -6,6 +6,7 @@ def analyze_code(code: str) -> dict:
     if not code.strip():
         return {
             "verdict": "Acidic",
+            "verdict_explanation": "Code file is empty or contains only whitespace.",
             "score": -3,
             "feedback": ["Empty or whitespace-only code provided."],
             "detailed_feedback": {
@@ -148,6 +149,14 @@ def analyze_code(code: str) -> dict:
     else:  # score >= 3
         verdict = "Basic"
         verdict_explanation = "Excellent code quality"
+
+    # Ensure verdict, verdict_explanation, and score are always present and non-empty
+    if not verdict:
+        verdict = "Neutral"
+    if not verdict_explanation:
+        verdict_explanation = "No explanation available."
+    if score is None:
+        score = 0
 
     return {
         "verdict": verdict,
