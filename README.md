@@ -43,11 +43,31 @@
 
 <div align="center">
 
-### 🏠 Home Interface
-![Home Interface](screenshots/home.png)
+### 🏠 Main Interface
+*Modern CodeLitmus interface with rainbow gradient title and glassmorphism effects*
+![Main Interface](screenshots/main-interface.png)
+
+### 📂 File Upload
+*Drag & drop file upload with animated progress indicators*
+![File Upload](screenshots/file-upload.png)
 
 ### 📊 Analysis Results
-![Analysis Results](screenshots/results.png)
+*Comprehensive code analysis with detailed metrics and visual feedback*
+![Analysis Results](screenshots/analysis-results.png)
+
+### 🌙 Dark Mode
+*Beautiful dark theme for comfortable coding sessions*
+![Dark Mode](screenshots/dark-mode.png)
+
+### 📱 Mobile Responsive
+*Perfect mobile experience with touch-friendly interface*
+![Mobile View](screenshots/mobile-view.png)
+
+### 📄 PDF Reports
+*Professional PDF report generation with detailed insights*
+![PDF Report](screenshots/pdf-report.png)
+
+</div>
 
 ### 📱 Mobile Responsive
 ![Mobile View](screenshots/mobile.png)
