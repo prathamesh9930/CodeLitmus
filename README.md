@@ -44,7 +44,7 @@
 <div align="center">
 
 ### 🏠 Home Interface
-![Home Interface](screenshots/home.png)
+![Home Interface](C:\Users\PRATHAMESH\OneDrive\Pictures\Screenshots\Screenshot 2025-08-09 005548.png)
 
 ### 📊 Analysis Results
 ![Analysis Results](screenshots/results.png)
