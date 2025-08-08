@@ -1,58 +1,4 @@
-.verdict-title {
-    font-size: 2.2em;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #222;
-    text-shadow: 0 2px 8px rgba(39,174,96,0.15);
-}
-.verdict-value {
-    font-weight: 800;
-    padding: 2px 10px;
-    border-radius: 6px;
-    background: #fff;
-    color: inherit;
-    box-shadow: 0 2px 8px rgba(39,174,96,0.10);
-}
-.verdict-explanation {
-    text-align: center;
-    font-style: italic;
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    color: #222;
-    background: #fff;
-    border-radius: 6px;
-    padding: 4px 10px;
-    box-shadow: 0 2px 8px rgba(39,174,96,0.07);
-}
-.score-label {
-    font-size: 1.5em;
-    font-weight: 600;
-    color: #222;
-    margin-bottom: 0.5em;
-}
-.score-badge {
-    color: #fff !important;
-    background: #27ae60;
-    border-radius: 8px;
-    padding: 2px 12px;
-    font-weight: 700;
-    box-shadow: 0 2px 8px rgba(39,174,96,0.15);
-}
-
-body.dark-mode .verdict-title,
-body.dark-mode .verdict-explanation,
-body.dark-mode .score-label {
-    color: #fff;
-    background: #222;
-}
-body.dark-mode .verdict-value {
-    background: #222;
-    color: #fff;
-}
-body.dark-mode .score-badge {
-    background: #27ae60;
-    color: #fff;
-}
+/* Verdict and Score Styling */
 .verdict-card h2 {
     font-size: 2.2em;
     font-weight: 700;
@@ -60,17 +6,20 @@ body.dark-mode .score-badge {
     color: #27ae60;
     text-shadow: 0 2px 8px rgba(39,174,96,0.15);
 }
+
 .verdict-card p {
     font-size: 1.2em;
     color: #bdc3c7;
     margin-bottom: 10px;
 }
+
 .verdict-card .score {
     font-size: 1.5em;
     font-weight: 600;
     color: #f39c12;
     margin-bottom: 0.5em;
 }
+/* Main Layout and Typography */
 body {
     background: linear-gradient(to right, #2c3e50, #3498db);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -99,12 +48,34 @@ body {
     animation: fadeInUp 1s cubic-bezier(.23,1.01,.32,1) 0.1s both;
 }
 
+/* Animations */
 @keyframes fadeInUp {
     0% { opacity: 0; transform: translateY(40px); }
     100% { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
 
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeCardIn {
+    0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes verdictColor {
+    0% { border-left-color: #e74c3c; }
+    100% { border-left-color: #27ae60; }
+}
+
+
+/* File Upload Area */
 #dropArea {
     border: 2px dashed #27ae60;
     border-radius: 15px;
@@ -112,21 +83,27 @@ body {
     background: rgba(39, 174, 96, 0.07);
     cursor: pointer;
     margin-bottom: 20px;
-    transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     box-shadow: 0 2px 12px rgba(39,174,96,0.08);
     animation: fadeIn 0.8s;
+    backdrop-filter: blur(5px);
 }
+
 #dropArea.highlight {
     border-color: #f39c12;
     background: rgba(241, 196, 15, 0.15);
     box-shadow: 0 4px 24px rgba(241,196,15,0.15);
-    transform: scale(1.04);
+    transform: scale(1.02);
+    border-style: solid;
 }
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+
+#dropArea:hover {
+    border-color: #2ecc71;
+    background: rgba(39, 174, 96, 0.12);
+    transform: translateY(-2px);
 }
+
 #dropText {
     color: #27ae60;
     font-size: 18px;
@@ -134,6 +111,7 @@ body {
 }
 
 
+/* Interactive Elements */
 button {
     background-color: #27ae60;
     border: none;
@@ -143,15 +121,37 @@ button {
     cursor: pointer;
     font-size: 16px;
     box-shadow: 0 2px 8px rgba(39, 174, 96, 0.15);
-    transition: background 0.2s, color 0.2s, transform 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
+    position: relative;
+    overflow: hidden;
 }
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+button:hover::before {
+    left: 100%;
+}
+
 button:hover {
     background-color: #2ecc71;
     color: #222;
-    transform: scale(1.07);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(39, 174, 96, 0.3);
 }
 
+button:active {
+    transform: translateY(0) scale(0.98);
+}
 
 .spinner {
     border: 6px solid #f3f3f3;
@@ -165,12 +165,8 @@ button:hover {
     margin: 30px auto;
     display: block;
 }
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
 
-/* Result cards */
+/* Result Cards and Verdict Styling */
 .result-card {
     background: rgba(255,255,255,0.07);
     border-radius: 15px;
@@ -178,31 +174,42 @@ button:hover {
     margin: 18px 0;
     padding: 22px 28px;
     text-align: left;
-    transition: background 0.2s, border-left-color 0.4s, box-shadow 0.2s, opacity 0.4s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0;
     animation: fadeCardIn 0.8s forwards;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
 }
-@keyframes fadeCardIn {
-    0% { opacity: 0; transform: translateY(30px); }
-    100% { opacity: 1; transform: translateY(0); }
+
+.result-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+    transition: left 0.6s;
 }
+
+.result-card:hover::before {
+    left: 100%;
+}
+
+.result-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(52,152,219,0.15);
+    background: rgba(255,255,255,0.12);
+}
+
 .verdict-card {
     border-left: 6px solid #27ae60;
     animation: verdictColor 1.2s;
 }
-@keyframes verdictColor {
-    0% { border-left-color: #e74c3c; }
-    100% { border-left-color: #27ae60; }
-}
-.good-card {
-    border-left: 6px solid #27ae60;
-}
-.improve-card {
-    border-left: 6px solid #e74c3c;
-}
-.metrics-card {
-    border-left: 6px solid #3498db;
-}
-.summary-card {
-    border-left: 6px solid #f39c12;
-}
+
+.good-card { border-left: 6px solid #27ae60; }
+.improve-card { border-left: 6px solid #e74c3c; }
+.metrics-card { border-left: 6px solid #3498db; }
+.summary-card { border-left: 6px solid #f39c12; }

@@ -5,21 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeLitmus - Code Quality Analyzer 🧪</title>
     <link rel="stylesheet" href="/static/style.css?v=2">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         .main-content {
             display: flex;
-            gap: 30px;
-            align-items: flex-start;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             width: 100%;
-            max-width: 1400px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 75vh;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .main-content.upload-mode {
+            min-height: auto;
+            justify-content: flex-start;
+            transform: translateY(-30px);
         }
         
         .analyze-container {
-            flex: 0 0 350px;
+            width: 100%;
+            max-width: 500px;
             background: rgba(0, 0, 0, 0.3);
-            padding: 25px;
+            padding: 30px;
             border-radius: 15px;
             text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            animation: containerFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .analyze-container {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .container {
+                padding: 20px;
+                width: 98%;
+            }
+            
+            h1 {
+                font-size: 1.8em !important;
+            }
         }
         
         .analyze-container h2 {
@@ -28,12 +67,33 @@
         }
         
         #result {
-            flex: 1;
+            width: 100%;
+            max-width: 1200px;
             padding: 25px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 15px;
             text-align: left;
-            min-height: 400px;
+            min-height: 200px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: none; /* Hidden by default */
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        #result.show {
+            display: block;
         }
         
         #result h2 {
@@ -83,23 +143,390 @@
             min-width: 200px;
             text-align: center;
         }
+        
+        /* Enhanced Progress Bar */
+        .progress-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 3px;
+            margin: 15px 0;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            border-radius: 8px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(90deg, #27ae60, #2ecc71, #58d68d);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* File Upload Enhancements */
+        .file-info {
+            margin-top: 10px;
+            padding: 8px;
+            background: rgba(39, 174, 96, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+            color: #27ae60;
+            display: none;
+        }
+        
+        /* Tooltip Styles */
+        .tooltip {
+            position: relative;
+            cursor: help;
+        }
+        
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 1000;
+        }
+        
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Header Styling */
+        .header-container {
+            text-align: center;
+            margin-bottom: 50px;
+            margin-top: 40px;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header-container.upload-mode {
+            margin-top: 20px;
+            margin-bottom: 30px;
+            transform: translateY(-20px);
+        }
+
+        .main-title {
+            font-size: 3.5em;
+            margin: 0;
+            font-weight: 700;
+            text-align: center;
+            animation: titlePulse 3s ease-in-out infinite;
+        }
+
+        .main-title .emoji {
+            font-size: 1em;
+            margin-right: 0.2em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            filter: brightness(1.2);
+        }
+
+        .main-title .title-text {
+            background: linear-gradient(135deg, #00d4aa 0%, #00a8ff 25%, #9c88ff 50%, #fbc531 75%, #ff6b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            animation: rainbowShift 8s ease-in-out infinite;
+            filter: brightness(1.1) contrast(1.2);
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes rainbowShift {
+            0%, 100% { filter: brightness(1.1) contrast(1.2) hue-rotate(0deg); }
+            25% { filter: brightness(1.2) contrast(1.3) hue-rotate(15deg); }
+            50% { filter: brightness(1.1) contrast(1.2) hue-rotate(30deg); }
+            75% { filter: brightness(1.2) contrast(1.3) hue-rotate(15deg); }
+        }
+
+        /* Metrics Column Layout */
+        .metrics-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 5px solid;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideInRight 0.6s ease forwards;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .metric-card:nth-child(1) {
+            border-left-color: #3498db;
+            animation-delay: 0.1s;
+        }
+
+        .metric-card:nth-child(2) {
+            border-left-color: #e74c3c;
+            animation-delay: 0.3s;
+        }
+
+        .metric-card:nth-child(3) {
+            border-left-color: #27ae60;
+            animation-delay: 0.5s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .metric-card:hover .metric-icon {
+            transform: scale(1.1) rotate(5deg);
+            animation-play-state: paused;
+        }
+
+        .metric-card:hover .metric-content h4 {
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+        }
+
+        .metric-icon {
+            font-size: 2.5em;
+            flex-shrink: 0;
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        .metric-content {
+            flex: 1;
+        }
+
+        .metric-content h4 {
+            margin: 0 0 10px 0;
+            font-size: 1.4em;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .metric-content p {
+            margin: 0;
+            line-height: 1.6;
+            color: #e0e0e0;
+            font-size: 1.1em;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Verdict Box Animations */
+        .verdict-container {
+            animation: verdictSlideIn 0.8s ease-out;
+            max-width: 100% !important;
+            width: 100% !important;
+            margin: 30px 0 !important;
+            padding: 30px !important;
+            border-radius: 20px !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        @keyframes verdictSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Result Cards Staggered Animation */
+        .result-card {
+            animation: cardFadeIn 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .result-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .result-card:nth-child(1) { animation-delay: 0.2s; }
+        .result-card:nth-child(2) { animation-delay: 0.4s; }
+        .result-card:nth-child(3) { animation-delay: 0.6s; }
+        .result-card:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Verdict Container Hover */
+        .verdict-container {
+            animation: verdictSlideIn 0.8s ease-out;
+            max-width: 100% !important;
+            width: 100% !important;
+            margin: 30px 0 !important;
+            padding: 30px !important;
+            border-radius: 20px !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4) !important;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .verdict-container:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        /* Good Points Card Hover */
+        .good-card:hover {
+            border-left-color: #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+        }
+
+        /* Improvement Card Hover */
+        .improve-card:hover {
+            border-left-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        /* Metrics Card Hover */
+        .metrics-card:hover {
+            border-left-color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        /* Summary Card Hover */
+        .summary-card:hover {
+            border-left-color: #9b59b6;
+            background: rgba(155, 89, 182, 0.1);
+        }
+
+        /* Button Hover Animations */
+        button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        /* Progress Bar Hover */
+        .progress-container:hover .progress-bar {
+            transform: scaleY(1.2);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Score Badge Hover */
+        .verdict-container p span:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Dark Mode Button Positioning */
+        .dark-mode-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .dark-mode-container button {
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode-container button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4) !important;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h1>🧪 CodeLitmus - Code Quality Analyzer</h1>
-            <button id="darkModeToggle" title="Toggle dark/light mode" style="background: #222; color: #fff; border-radius: 20px; padding: 8px 18px; font-size: 16px; border: none; cursor: pointer;">🌙 Dark Mode</button>
+        <!-- Dark Mode Button -->
+        <div class="dark-mode-container">
+            <button id="darkModeToggle" title="Toggle dark/light mode" style="background: #222; color: #fff; border-radius: 20px; padding: 8px 18px; font-size: 16px; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">🌙 Dark Mode</button>
         </div>
+        
+        <!-- Main Title - Centered -->
+        <div class="header-container">
+            <h1 class="main-title"><span class="emoji">🧪</span><span class="title-text">CodeLitmus - Code Quality Analyzer</span></h1>
+        </div>
+        
         <div class="main-content">
             <div class="analyze-container">
                 <h2>Analyze Code Quality</h2>
-                <div id="dropArea" class="drop-area" title="Drag and drop your code file here or click to select">
+                <div id="dropArea" class="drop-area tooltip" data-tooltip="Supported formats: .py, .js, .ts, .java, .cpp, .c, .cs" title="Drag and drop your code file here or click to select">
                     <input type="file" id="codeFile" accept=".py,.js,.ts,.java,.cpp,.c,.cs" required style="display:none;">
                     <p id="dropText">Drop file here or click to select</p>
+                    <p id="fileName" style="font-size: 14px; color: #27ae60; margin-top: 10px; font-weight: bold; display: none;"></p>
                 </div>
-                <button onclick="analyzeCode()" title="Analyze the selected code file">Analyze Code</button>
+                <div id="uploadProgress" class="progress-container" style="display:none;">
+                    <div id="progressBar" class="progress-bar" style="width: 0%;"></div>
+                </div>
+                <button onclick="analyzeCode()" class="tooltip" data-tooltip="Click to start code analysis" title="Analyze the selected code file">Analyze Code</button>
             </div>
+            
+            <!-- Results section - initially hidden -->
             <div id="result"></div>
         </div>
         <div id="spinner" class="spinner" style="display:none;"></div>
@@ -124,12 +551,81 @@
         dropArea.addEventListener('drop', (e) => {
             e.preventDefault();
             dropArea.classList.remove('highlight');
-            dropText.textContent = 'File selected!';
+            dropText.textContent = 'File uploaded!';
             codeFileInput.files = e.dataTransfer.files;
+            
+            // Show file info and start upload animation immediately
+            if (codeFileInput.files[0]) {
+                showFileName(codeFileInput.files[0]);
+                // Start upload progress animation
+                animateProgress(100);
+                setTimeout(() => {
+                    dropText.textContent = 'File ready for analysis';
+                }, 1500);
+            }
         });
         codeFileInput.addEventListener('change', () => {
-            dropText.textContent = codeFileInput.files.length ? 'File selected!' : 'Drop file here or click to select';
+            const file = codeFileInput.files[0];
+            if (file) {
+                dropText.textContent = 'File uploaded!';
+                showFileName(file);
+                // Start upload progress animation immediately
+                animateProgress(100);
+                setTimeout(() => {
+                    dropText.textContent = 'File ready for analysis';
+                }, 1500);
+            } else {
+                dropText.textContent = 'Drop file here or click to select';
+                hideFileName();
+            }
         });
+
+        // Enhanced file name display in drop area
+        function showFileName(file) {
+            const fileName = document.getElementById('fileName');
+            const size = (file.size / 1024).toFixed(2);
+            fileName.innerHTML = `📄 ${file.name} (${size} KB)`;
+            fileName.style.display = 'block';
+        }
+
+        function hideFileName() {
+            document.getElementById('fileName').style.display = 'none';
+        }
+
+        // Enhanced progress animation
+        function animateProgress(targetWidth) {
+            const progressContainer = document.getElementById('uploadProgress');
+            const progressBar = document.getElementById('progressBar');
+            const analyzeButton = document.querySelector('button[onclick="analyzeCode()"]');
+            
+            // Disable analyze button during animation
+            analyzeButton.disabled = true;
+            analyzeButton.style.opacity = '0.5';
+            analyzeButton.style.cursor = 'not-allowed';
+            
+            progressContainer.style.display = 'block';
+            
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= targetWidth) {
+                    clearInterval(interval);
+                    if (targetWidth === 100) {
+                        setTimeout(() => {
+                            progressContainer.style.display = 'none';
+                            progressBar.style.width = '0%';
+                            
+                            // Re-enable analyze button after animation completes
+                            analyzeButton.disabled = false;
+                            analyzeButton.style.opacity = '1';
+                            analyzeButton.style.cursor = 'pointer';
+                        }, 1000);
+                    }
+                } else {
+                    width += 2;
+                    progressBar.style.width = width + '%';
+                }
+            }, 30);
+        }
 
         // Dark mode toggle
         const darkModeToggle = document.getElementById('darkModeToggle');
@@ -145,75 +641,402 @@
 
         async function analyzeCode() {
             const file = document.getElementById('codeFile').files[0];
+            const analyzeButton = document.querySelector('button[onclick="analyzeCode()"]');
+            
             if (!file) {
                 document.getElementById("result").innerHTML = '<p class="error">Please select a file first.</p>';
                 return;
             }
+            
+            // File size validation (5MB limit)
+            if (file.size > 5 * 1024 * 1024) {
+                document.getElementById("result").innerHTML = '<p class="error">File size too large. Please select a file smaller than 5MB.</p>';
+                return;
+            }
+            
+            // Add upward animation classes
+            const headerContainer = document.querySelector('.header-container');
+            const mainContent = document.querySelector('.main-content');
+            headerContainer.classList.add('upload-mode');
+            mainContent.classList.add('upload-mode');
+            
             const formData = new FormData();
             formData.append("file", file);
+            
             try {
+                // Disable button during analysis
+                analyzeButton.disabled = true;
+                analyzeButton.style.opacity = '0.5';
+                analyzeButton.style.cursor = 'not-allowed';
+                analyzeButton.textContent = '🔍 Analyzing...';
+                
+                // Start analysis animation (different from upload)
                 showSpinner(true);
-                document.getElementById("result").innerHTML = '';
+                document.getElementById("result").innerHTML = '<p style="text-align: center; color: #27ae60;">🔍 Analyzing your code...</p>';
+                
                 const res = await fetch("/analyze/", {
                     method: "POST",
                     body: formData
                 });
+                
                 const data = await res.json();
                 showSpinner(false);
+                
+                // Re-enable button after analysis
+                analyzeButton.disabled = false;
+                analyzeButton.style.opacity = '1';
+                analyzeButton.style.cursor = 'pointer';
+                analyzeButton.textContent = 'Analyze Code';
+                
                 if (res.ok) {
-                    const verdictColor = data.verdict === 'Basic' ? '#27ae60' : data.verdict === 'Neutral' ? '#f39c12' : '#e74c3c';
-                    let goodPointsHtml = '';
-                    if (data.detailed_feedback.good_points.length > 0) {
-                        goodPointsHtml = `
-                            <div class="result-card good-card">
-                                <h3>✅ Strengths of Your Code</h3>
-                                <ul>${data.detailed_feedback.good_points.map(point => `<li>• ${point}</li>`).join('')}</ul>
-                            </div>
-                        `;
-                    }
-                    let improvementHtml = '';
-                    if (data.detailed_feedback.areas_for_improvement.length > 0) {
-                        improvementHtml = `
-                            <div class="result-card improve-card">
-                                <h3>🔧 Areas for Improvement</h3>
-                                <div class="improvement-grid">${data.detailed_feedback.areas_for_improvement.map(point => `<div class="improvement-item">• ${point}</div>`).join('')}</div>
-                            </div>
-                        `;
-                    }
-                    let metricsHtml = '';
-                    if (data.detailed_feedback.metrics_explanation) {
-                        metricsHtml = `
-                            <div class="result-card metrics-card">
-                                <h3>📊 Detailed Metrics Analysis</h3>
-                                <div class="metrics-row">
-                                    <div class="metric-item"><strong>🔄 Complexity:</strong> ${data.detailed_feedback.metrics_explanation.complexity}</div>
-                                    <div class="metric-item"><strong>🔧 Maintainability:</strong> ${data.detailed_feedback.metrics_explanation.maintainability}</div>
-                                    <div class="metric-item"><strong>💬 Comments:</strong> ${data.detailed_feedback.metrics_explanation.comments}</div>
-                                </div>
-                            </div>
-                        `;
-                    }
-                    document.getElementById("result").innerHTML = `
-                        <div style="background: rgba(255, 255, 255, 0.08); color: white; padding: 20px; margin: 20px 0; border: 3px solid ${verdictColor}; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); backdrop-filter: blur(10px);">
-                            <h1 style="font-size: 2.5em; color: ${verdictColor}; margin: 0 0 15px 0; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">🧪 VERDICT: ${data.verdict}</h1>
-                            <p style="font-size: 1.4em; color: #f0f0f0; text-align: center; margin: 10px 0; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">${data.verdict_explanation}</p>
-                            <p style="font-size: 1.6em; color: #f0f0f0; text-align: center; margin: 15px 0; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">📊 OVERALL SCORE: <span style="background: ${verdictColor}; color: white; padding: 5px 15px; border-radius: 20px; font-size: 1.2em; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">${data.score}/3</span></p>
-                        </div>
-                        ${goodPointsHtml}
-                        ${improvementHtml}
-                        ${metricsHtml}
-                        <div class="result-card summary-card">
-                            <h3>📋 Quick Summary</h3>
-                            <ul>${data.feedback && data.feedback.length ? data.feedback.map(f => `<li>• ${f}</li>`).join('') : '<li>No summary available.</li>'}</ul>
-                        </div>
-                    `;
+                    displayResults(data);
                 } else {
                     document.getElementById("result").innerHTML = `<p class="error">Error: ${data.error}</p>`;
                 }
             } catch (error) {
                 showSpinner(false);
+                
+                // Re-enable button on error
+                analyzeButton.disabled = false;
+                analyzeButton.style.opacity = '1';
+                analyzeButton.style.cursor = 'pointer';
+                analyzeButton.textContent = 'Analyze Code';
+                
                 document.getElementById("result").innerHTML = `<p class="error">Error: ${error.message}</p>`;
             }
+        }
+
+        function displayResults(data) {
+            const verdictColor = data.verdict === 'Basic' ? '#27ae60' : data.verdict === 'Neutral' ? '#f39c12' : '#e74c3c';
+            
+            // Score progress bar
+            const scorePercentage = (data.score / 3) * 100;
+            
+            let goodPointsHtml = '';
+            if (data.detailed_feedback.good_points.length > 0) {
+                goodPointsHtml = `
+                    <div class="result-card good-card">
+                        <h3>✅ Strengths of Your Code</h3>
+                        <ul>${data.detailed_feedback.good_points.map(point => `<li>• ${point}</li>`).join('')}</ul>
+                    </div>
+                `;
+            }
+            
+            let improvementHtml = '';
+            if (data.detailed_feedback.areas_for_improvement.length > 0) {
+                improvementHtml = `
+                    <div class="result-card improve-card">
+                        <h3>🔧 Areas for Improvement</h3>
+                        <div class="improvement-grid">${data.detailed_feedback.areas_for_improvement.map(point => `<div class="improvement-item">• ${point}</div>`).join('')}</div>
+                    </div>
+                `;
+            }
+            
+            let metricsHtml = '';
+            if (data.detailed_feedback.metrics_explanation) {
+                metricsHtml = `
+                    <div class="result-card metrics-card">
+                        <h3>📊 Detailed Metrics Analysis</h3>
+                        <div class="metrics-column">
+                            <div class="metric-card complexity-card">
+                                <div class="metric-icon">🔄</div>
+                                <div class="metric-content">
+                                    <h4>Complexity</h4>
+                                    <p>${data.detailed_feedback.metrics_explanation.complexity}</p>
+                                </div>
+                            </div>
+                            <div class="metric-card maintainability-card">
+                                <div class="metric-icon">🔧</div>
+                                <div class="metric-content">
+                                    <h4>Maintainability</h4>
+                                    <p>${data.detailed_feedback.metrics_explanation.maintainability}</p>
+                                </div>
+                            </div>
+                            <div class="metric-card comments-card">
+                                <div class="metric-icon">💬</div>
+                                <div class="metric-content">
+                                    <h4>Comments</h4>
+                                    <p>${data.detailed_feedback.metrics_explanation.comments}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `
+                <div class="verdict-container" style="background: rgba(255, 255, 255, 0.08); color: white; padding: 25px; margin: 15px; border: 2px solid ${verdictColor}; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); backdrop-filter: blur(15px); width: calc(100% - 34px); box-sizing: border-box;">
+                    <h1 style="font-size: 3em; color: ${verdictColor}; margin: 0 0 20px 0; text-align: center; text-shadow: 0 3px 6px rgba(0,0,0,0.4);">🧪 VERDICT: ${data.verdict}</h1>
+                    <p style="font-size: 1.6em; color: #f0f0f0; text-align: center; margin: 15px 0; font-weight: 500; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">${data.verdict_explanation}</p>
+                    <div class="progress-container" style="margin: 25px 0;">
+                        <div class="progress-bar" style="width: ${scorePercentage}%; background: ${verdictColor}; height: 12px;"></div>
+                    </div>
+                    <p style="font-size: 1.8em; color: #f0f0f0; text-align: center; margin: 20px 0; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">📊 OVERALL SCORE: <span style="background: ${verdictColor}; color: white; padding: 8px 20px; border-radius: 25px; font-size: 1.3em; box-shadow: 0 4px 10px rgba(0,0,0,0.4);">${data.score}/3</span></p>
+                </div>
+                ${goodPointsHtml}
+                ${improvementHtml}
+                ${metricsHtml}
+                <div class="result-card summary-card">
+                    <h3>📋 Quick Summary</h3>
+                    <ul>${data.feedback && data.feedback.length ? data.feedback.map(f => `<li>• ${f}</li>`).join('') : '<li>No summary available.</li>'}</ul>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button onclick="downloadReport()" style="background: #3498db; margin-right: 10px;">📄 Download Report</button>
+                    <button onclick="analyzeAnother()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; padding: 12px 20px; border-radius: 20px; cursor: pointer; font-size: 16px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); transition: all 0.3s ease;">🔄 Analyze Another File</button>
+                </div>
+            `;
+            
+            // Show the result section with animation
+            resultDiv.classList.add('show');
+            
+            // Smooth scroll to results
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function downloadReport() {
+            // Show confirmation dialog
+            const userConfirmed = confirm("🔔 Download Confirmation\n\nDo you want to download the CodeLitmus analysis report as a PDF file?\n\nThis will include your code quality verdict, scores, and detailed feedback.");
+            
+            if (!userConfirmed) {
+                return; // User cancelled
+            }
+
+            try {
+                // Get jsPDF from the global window object
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                // Helper function to clean text from HTML and special characters
+                function cleanText(text) {
+                    if (!text) return '';
+                    // Remove HTML tags and decode entities
+                    const div = document.createElement('div');
+                    div.innerHTML = text;
+                    let cleanedText = div.textContent || div.innerText || '';
+                    // Replace common problematic characters
+                    cleanedText = cleanedText
+                        .replace(/[^\x00-\x7F]/g, '') // Remove non-ASCII characters
+                        .replace(/â€¢/g, '•') // Fix bullet points
+                        .replace(/â€™/g, "'") // Fix apostrophes
+                        .replace(/â€œ/g, '"') // Fix quotes
+                        .replace(/â€/g, '"') // Fix quotes
+                        .replace(/Ã¸/g, '') // Remove problematic characters
+                        .replace(/Ãµ/g, '') // Remove problematic characters
+                        .replace(/Ã«/g, '') // Remove problematic characters
+                        .replace(/ê/g, '') // Remove problematic characters
+                        .replace(/[�]/g, '') // Remove replacement characters
+                        .trim();
+                    return cleanedText;
+                }
+                
+                // Get current date
+                const currentDate = new Date().toLocaleDateString();
+                
+                // Get analysis data from the result div
+                const resultDiv = document.getElementById('result');
+                
+                // Extract verdict, score, and explanation with better text cleaning
+                const verdictElement = resultDiv.querySelector('h1');
+                const verdict = verdictElement ? cleanText(verdictElement.textContent).replace('VERDICT: ', '').replace('🧪 ', '') : 'N/A';
+                
+                const scoreElement = resultDiv.querySelector('span');
+                const score = scoreElement ? cleanText(scoreElement.textContent) : 'N/A';
+                
+                const explanationElements = resultDiv.querySelectorAll('p');
+                let explanation = 'N/A';
+                if (explanationElements.length > 1) {
+                    explanation = cleanText(explanationElements[1].textContent);
+                }
+                
+                // PDF Content
+                doc.setFontSize(20);
+                doc.setTextColor(40, 116, 166);
+                doc.text('CodeLitmus Analysis Report', 20, 30);
+                
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 0);
+                doc.text('Generated on: ' + currentDate, 20, 45);
+                
+                doc.setFontSize(16);
+                doc.setTextColor(39, 174, 96);
+                doc.text('ANALYSIS RESULTS', 20, 65);
+                
+                doc.setFontSize(14);
+                doc.setTextColor(0, 0, 0);
+                doc.text('Verdict: ' + verdict, 20, 85);
+                doc.text('Overall Score: ' + score, 20, 100);
+                
+                // Split long explanation text into multiple lines
+                const explanationLines = doc.splitTextToSize('Explanation: ' + explanation, 170);
+                doc.text(explanationLines, 20, 115);
+                
+                let yPosition = 115 + (explanationLines.length * 7) + 5;
+                
+                // Good Points Section
+                const goodCards = document.querySelectorAll('.good-card');
+                if (goodCards.length > 0) {
+                    doc.setFontSize(14);
+                    doc.setTextColor(39, 174, 96);
+                    doc.text('STRENGTHS OF YOUR CODE', 20, yPosition);
+                    yPosition += 8;
+                    
+                    doc.setFontSize(10);
+                    doc.setTextColor(0, 0, 0);
+                    goodCards.forEach(card => {
+                        const items = card.querySelectorAll('li');
+                        items.forEach((item, index) => {
+                            const text = cleanText(item.textContent).replace('• ', '');
+                            if (text && yPosition < 250) {
+                                const lines = doc.splitTextToSize('• ' + text, 165);
+                                doc.text(lines, 25, yPosition);
+                                yPosition += lines.length * 3.2 + 1;
+                                // Add extra space after each paragraph within section
+                                if (index < items.length - 1) {
+                                    yPosition += 2;
+                                }
+                            }
+                        });
+                    });
+                    yPosition += 4;
+                }
+                
+                // Areas for Improvement Section
+                const improveCards = document.querySelectorAll('.improve-card');
+                if (improveCards.length > 0 && yPosition < 220) {
+                    doc.setFontSize(14);
+                    doc.setTextColor(231, 76, 60);
+                    doc.text('AREAS FOR IMPROVEMENT', 20, yPosition);
+                    yPosition += 8;
+                    
+                    doc.setFontSize(10);
+                    doc.setTextColor(0, 0, 0);
+                    improveCards.forEach(card => {
+                        const items = card.querySelectorAll('.improvement-item');
+                        items.forEach((item, index) => {
+                            const text = cleanText(item.textContent).replace('• ', '');
+                            if (text && yPosition < 250) {
+                                const lines = doc.splitTextToSize('• ' + text, 165);
+                                doc.text(lines, 25, yPosition);
+                                yPosition += lines.length * 3.2 + 1;
+                                // Add extra space after each paragraph within section
+                                if (index < items.length - 1) {
+                                    yPosition += 2;
+                                }
+                            }
+                        });
+                    });
+                    yPosition += 4;
+                }
+                
+                // Metrics Section
+                const metricsCards = document.querySelectorAll('.metrics-card');
+                if (metricsCards.length > 0 && yPosition < 220) {
+                    doc.setFontSize(14);
+                    doc.setTextColor(52, 152, 219);
+                    doc.text('DETAILED METRICS ANALYSIS', 20, yPosition);
+                    yPosition += 8;
+                    
+                    doc.setFontSize(10);
+                    doc.setTextColor(0, 0, 0);
+                    metricsCards.forEach(card => {
+                        const metricItems = card.querySelectorAll('.metric-item');
+                        metricItems.forEach((item, index) => {
+                            const text = cleanText(item.textContent);
+                            if (text && yPosition < 250) {
+                                const lines = doc.splitTextToSize('• ' + text, 165);
+                                doc.text(lines, 25, yPosition);
+                                yPosition += lines.length * 3.2 + 1;
+                                // Add extra space after each paragraph within section
+                                if (index < metricItems.length - 1) {
+                                    yPosition += 2;
+                                }
+                            }
+                        });
+                    });
+                    yPosition += 4;
+                }
+                
+                // Summary Section
+                const summaryCards = document.querySelectorAll('.summary-card');
+                if (summaryCards.length > 0 && yPosition < 220) {
+                    doc.setFontSize(14);
+                    doc.setTextColor(243, 156, 18);
+                    doc.text('QUICK SUMMARY', 20, yPosition);
+                    yPosition += 8;
+                    
+                    doc.setFontSize(10);
+                    doc.setTextColor(0, 0, 0);
+                    summaryCards.forEach(card => {
+                        const items = card.querySelectorAll('li');
+                        items.forEach((item, index) => {
+                            const text = cleanText(item.textContent).replace('• ', '');
+                            if (text && text !== 'No summary available.' && yPosition < 270) {
+                                const lines = doc.splitTextToSize('• ' + text, 165);
+                                doc.text(lines, 25, yPosition);
+                                yPosition += lines.length * 3.2 + 1;
+                                // Add extra space after each paragraph within section
+                                if (index < items.length - 1) {
+                                    yPosition += 2;
+                                }
+                            }
+                        });
+                    });
+                    yPosition += 4;
+                }
+                
+                // Remove the new page logic to keep everything on one page
+                // Just ensure we have enough space for footer
+                if (yPosition > 275) {
+                    yPosition = 275;
+                }
+                
+                // Add footer
+                doc.setFontSize(8);
+                doc.setTextColor(128, 128, 128);
+                doc.text('Generated by CodeLitmus - Code Quality Analyzer', 20, 285);
+                
+                // Save the PDF
+                doc.save('codelitmus-analysis-report.pdf');
+                
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                alert("❌ Error\n\nThere was an issue generating the PDF report. Please try again.");
+            }
+        }
+
+        function analyzeAnother() {
+            const analyzeButton = document.querySelector('button[onclick="analyzeCode()"]');
+            
+            // Hide results section
+            const resultDiv = document.getElementById("result");
+            resultDiv.classList.remove('show');
+            
+            // Remove upload mode classes to return to original position
+            const headerContainer = document.querySelector('.header-container');
+            const mainContent = document.querySelector('.main-content');
+            headerContainer.classList.remove('upload-mode');
+            mainContent.classList.remove('upload-mode');
+            
+            // Reset the form after a short delay to allow animation
+            setTimeout(() => {
+                document.getElementById('codeFile').value = '';
+                document.getElementById('dropText').textContent = 'Drop file here or click to select';
+                hideFileName();
+                
+                // Smooth scroll back to top
+                document.querySelector('.analyze-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
+            
+            // Hide progress bar and reset button
+            document.getElementById('uploadProgress').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+            
+            // Ensure button is enabled and reset
+            analyzeButton.disabled = false;
+            analyzeButton.style.opacity = '1';
+            analyzeButton.style.cursor = 'pointer';
+            analyzeButton.textContent = 'Analyze Code';
         }
     </script>
     </script>
