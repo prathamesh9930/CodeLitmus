@@ -54,8 +54,6 @@
 ### 📊 Analysis Results
 *Comprehensive code analysis with detailed metrics and visual feedback*
 
-![Analysis Results Overview](screenshots/analysis-results.png)
-
 *Detailed metrics breakdown with color-coded feedback*
 ![Analysis Results Detailed](screenshots/analysis-results-detailed.png)
 
