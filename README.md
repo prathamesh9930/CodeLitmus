@@ -53,7 +53,14 @@
 
 ### 📊 Analysis Results
 *Comprehensive code analysis with detailed metrics and visual feedback*
-![Analysis Results](screenshots/analysis-results.png)
+
+![Analysis Results Overview](screenshots/analysis-results.png)
+
+*Detailed metrics breakdown with color-coded feedback*
+![Analysis Results Detailed](screenshots/analysis-results-detailed.png)
+
+*Advanced metrics analysis with professional insights*
+![Analysis Results Metrics](screenshots/analysis-results-metrics.png)
 
 ### 🌙 Dark Mode
 *Beautiful dark theme for comfortable coding sessions*
