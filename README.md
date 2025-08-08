@@ -11,7 +11,7 @@
 
 **A modern, interactive web application that performs comprehensive code quality analysis with beautiful visualizations and detailed metrics.**
 
-[🚀 Live Demo](#demo) • [📖 Documentation](#documentation) • [🛠️ Installation](#installation) • [🤝 Contributing](#contributing)
+[�️ Screenshots](#-screenshots) • [📖 API Reference](#-api-reference) • [🛠️ Installation](#-installation) • [🤝 Contributing](#-contributing)
 
 </div>
 
