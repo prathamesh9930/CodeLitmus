@@ -26,23 +26,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request, "message": ""})
-
-@app.post("/upload", response_class=HTMLResponse)
-async def upload_file(request: Request, file: UploadFile = File(...)):
-    if not file.filename:
-        return templates.TemplateResponse("index.html", {
-            "request": request,
-            "message": "❌ No file selected or invalid filename!"
-        })
-    
-    file_location = os.path.join(UPLOAD_FOLDER, file.filename)
-    with open(file_location, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "message": f"✅ File '{file.filename}' uploaded successfully!"
-    })
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/analyze/")
 async def analyze_file(file: UploadFile = File(...)):

@@ -2,10 +2,9 @@ body {
     background: linear-gradient(to right, #2c3e50, #3498db);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
 }
 
 .container {
@@ -13,7 +12,9 @@ body {
     padding: 40px;
     border-radius: 15px;
     text-align: center;
-    width: 400px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 95%;
 }
 
 input[type="file"] {
