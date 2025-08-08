@@ -62,22 +62,9 @@
 *Advanced metrics analysis with professional insights*
 ![Analysis Results Metrics](screenshots/analysis-results-metrics.png)
 
-### 🌙 Dark Mode
-*Beautiful dark theme for comfortable coding sessions*
-![Dark Mode](screenshots/dark-mode.png)
-
 ### 📱 Mobile Responsive
 *Perfect mobile experience with touch-friendly interface*
-![Mobile View](screenshots/mobile-view.png)
-
-### 📄 PDF Reports
-*Professional PDF report generation with detailed insights*
-![PDF Report](screenshots/pdf-report.png)
-
-</div>
-
-### 📱 Mobile Responsive
-![Mobile View](screenshots/mobile.png)
+![Mobile View](screenshots/mobile-responsive.png)
 
 </div>
 
