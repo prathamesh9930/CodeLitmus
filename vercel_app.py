@@ -4,27 +4,36 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 import os
-import shutil
-from backend.analyzer import analyze_code
+import sys
+
+# Add backend to Python path
+sys.path.append(os.path.join(os.path.dirname(__file__), 'backend'))
+
+from analyzer import analyze_code
 from mangum import Mangum
 
 app = FastAPI()
 
-# Add CORS middleware to allow frontend requests
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify your frontend URL
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Get the directory paths for Vercel
-app.mount("/static", StaticFiles(directory="backend/static"), name="static")
-templates = Jinja2Templates(directory="backend/templates")
+# Simple path handling for Vercel
+try:
+    app.mount("/static", StaticFiles(directory="backend/static"), name="static")
+    templates = Jinja2Templates(directory="backend/templates")
+except Exception as e:
+    print(f"Error mounting static files: {e}")
+    # Fallback
+    templates = Jinja2Templates(directory="./backend/templates")
 
-UPLOAD_FOLDER = "backend/uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+# Create uploads directory
+os.makedirs("backend/uploads", exist_ok=True)
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
