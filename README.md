@@ -81,11 +81,32 @@
 ### 🌟 **Main Interface**
 *Beautiful gradient background with floating animations*
 
+<img src="screenshots/main-interface.png" alt="CodeLitmus Main Interface" width="700">
+
+---
+
 ### 📊 **Analysis Results** 
 *Comprehensive metrics with visual progress indicators*
 
+<img src="screenshots/analysis-results.png" alt="Analysis Results Overview" width="700">
+
+<img src="screenshots/analysis-results-detailed.png" alt="Detailed Analysis Results" width="700">
+
+<img src="screenshots/analysis-results-metrics.png" alt="Analysis Metrics" width="700">
+
+---
+
+### 📂 **File Upload Experience**
+*Intuitive drag & drop file upload*
+
+<img src="screenshots/file-upload.png" alt="File Upload Interface" width="700">
+
+---
+
 ### 📱 **Mobile Experience**
 *Perfectly responsive design for all devices*
+
+<img src="screenshots/mobile-responsive.png" alt="Mobile Responsive Design" width="700">
 
 </div>
 
