@@ -1,4 +1,28 @@
-# 🧪 CodeLitmus - Advanced Code Quality Analyzer
+# 🧪 CodeLi**A modern, interactive web application that performs comprehensive code quality analysis with beautiful visualizations and detailed metrics.**
+
+## 🚀 **Live Demo**
+
+### **✨ Try CodeLitmus Now - No Installation Required!**
+
+<div align="center">
+
+### **🌐 [**LIVE WEBSITE - codelitmus.onrender.com**](https://codelitmus.onrender.com)**
+
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Now-success?style=for-the-badge&logo=render)](https://codelitmus.onrender.com)
+[![Hosted on](https://img.shields.io/badge/Hosted_on-Render-9f40ff?style=flat-square&logo=render)](https://render.com)
+
+**🎯 Instantly analyze your code quality with beautiful animations and detailed metrics!**
+
+</div>
+
+---
+
+**Quick Navigation:**
+[🖼️ Screenshots](#-screenshots) • [📖 API Reference](#-api-reference) • [🛠️ Installation](#-installation) • [🤝 Contributing](#-contributing)
+
+</div>
+
+---Advanced Code Quality Analyzer
 
 <div align="center">
 
@@ -226,6 +250,40 @@ black backend/
 
 ---
 
+## 🌐 Deployment
+
+### 🚀 **Live Production Deployment**
+
+CodeLitmus is currently deployed and running live on **Render**:
+
+**🔗 Live URL:** [https://codelitmus.onrender.com](https://codelitmus.onrender.com)
+
+### ⚡ **Deployment Features**
+- ✅ **Free Hosting** - Powered by Render's free tier
+- ✅ **Auto-Deploy** - Automatic deployments from GitHub
+- ✅ **HTTPS Enabled** - Secure SSL certificate included
+- ✅ **All Animations Preserved** - Full UI/UX experience maintained
+- ✅ **Zero Configuration** - Ready to use, no setup required
+
+### 🛠️ **Deploy Your Own Instance**
+
+Want to deploy your own version? It's easy with Render:
+
+1. **Fork this repository**
+2. **Sign up at [render.com](https://render.com)**
+3. **Connect your GitHub repository**
+4. **Use these settings:**
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `cd backend && uvicorn app:app --host 0.0.0.0 --port $PORT`
+5. **Deploy!** - Your instance will be live in minutes
+
+### 📈 **Performance Notes**
+- **Cold Start:** First visit may take 10-15 seconds (free tier limitation)
+- **Active Performance:** Lightning fast once warmed up
+- **Uptime:** 24/7 availability with automatic restarts
+
+---
+
 ## 🤝 Contributing
 
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
@@ -285,7 +343,11 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ### 🌟 **Star this repository if you found it helpful!**
 
+### 🚀 **[Try Live Demo](https://codelitmus.onrender.com)** | **[View Source](https://github.com/prathamesh9930/CodeLitmus)**
+
 **Made with ❤️ by [Prathamesh](https://github.com/prathamesh9930)**
+
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-codelitmus.onrender.com-success?style=flat-square)](https://codelitmus.onrender.com)
 
 [⬆ Back to top](#-codelitmus---advanced-code-quality-analyzer)
 
