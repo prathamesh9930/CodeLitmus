@@ -6,19 +6,25 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 import sys
 
-# Add backend to Python path
-backend_path = os.path.join(os.path.dirname(__file__), 'backend')
-if backend_path not in sys.path:
-    sys.path.insert(0, backend_path)
+# Add backend to Python path for both local and Vercel environments
+current_dir = os.path.dirname(os.path.abspath(__file__))
+backend_path = os.path.join(current_dir, 'backend')
 
-# Import after adding to path
-try:
-    from analyzer import analyze_code
-except ImportError:
-    # Fallback import
-    sys.path.append('backend')
-    from analyzer import analyze_code
+# Add multiple possible paths
+possible_paths = [
+    backend_path,
+    'backend',
+    './backend',
+    os.path.join(os.getcwd(), 'backend')
+]
 
+for path in possible_paths:
+    if path not in sys.path and os.path.exists(path):
+        sys.path.insert(0, path)
+        break
+
+# Now import - this will work in both environments
+from backend.analyzer import analyze_code
 from mangum import Mangum
 
 app = FastAPI()
