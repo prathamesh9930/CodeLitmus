@@ -1,75 +1,100 @@
 from fastapi import FastAPI, File, UploadFile, Request
 from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-from fastapi.middleware.cors import CORSMiddleware
+from mangum import Mangum
 import os
 import sys
 
-# Add backend to Python path for both local and Vercel environments
-current_dir = os.path.dirname(os.path.abspath(__file__))
-backend_path = os.path.join(current_dir, 'backend')
+# Simple approach: add current directory to path
+sys.path.insert(0, os.path.dirname(__file__))
 
-# Add multiple possible paths
-possible_paths = [
-    backend_path,
-    'backend',
-    './backend',
-    os.path.join(os.getcwd(), 'backend')
-]
-
-for path in possible_paths:
-    if path not in sys.path and os.path.exists(path):
-        sys.path.insert(0, path)
-        break
-
-# Now import - this will work in both environments
-from backend.analyzer import analyze_code
-from mangum import Mangum
+# Import the analyzer directly
+import backend.analyzer as analyzer
 
 app = FastAPI()
 
-# Add CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Simple path handling for Vercel
-templates = None
-try:
-    # Check if backend directory exists
-    if os.path.exists("backend/static"):
-        app.mount("/static", StaticFiles(directory="backend/static"), name="static")
-    else:
-        print("Static directory not found")
-    
-    if os.path.exists("backend/templates"):
-        templates = Jinja2Templates(directory="backend/templates")
-    else:
-        print("Templates directory not found")
-        # Try alternative path
-        templates = Jinja2Templates(directory="./backend/templates")
-except Exception as e:
-    print(f"Error mounting static files: {e}")
-    # Fallback
-    try:
-        templates = Jinja2Templates(directory="./backend/templates")
-    except:
-        templates = None
-
-# Create uploads directory
-os.makedirs("backend/uploads", exist_ok=True)
-
-@app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
-    if templates:
-        return templates.TemplateResponse("index.html", {"request": request})
-    else:
-        return HTMLResponse("<h1>CodeLitmus</h1><p>Templates not found. Please check deployment.</p>")
+@app.get("/")
+async def home():
+    html_content = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>CodeLitmus - Code Quality Analyzer</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+            .container { max-width: 800px; margin: 0 auto; text-align: center; }
+            .upload-area { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 10px; margin: 20px 0; }
+            textarea { width: 100%; height: 200px; padding: 10px; border-radius: 5px; border: none; }
+            button { background: #ff6b6b; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+            button:hover { background: #ff5252; }
+            .result { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin: 20px 0; text-align: left; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>🧪 CodeLitmus - Code Quality Analyzer</h1>
+            <p>Analyze your Python code for complexity, maintainability, and quality metrics</p>
+            
+            <div class="upload-area">
+                <h3>Paste your Python code:</h3>
+                <textarea id="codeInput" placeholder="# Paste your Python code here..."></textarea>
+                <br><br>
+                <button onclick="analyzeCode()">🔍 Analyze Code</button>
+            </div>
+            
+            <div id="result" class="result" style="display:none;">
+                <h3>Analysis Result:</h3>
+                <div id="resultContent"></div>
+            </div>
+        </div>
+        
+        <script>
+            async function analyzeCode() {
+                const code = document.getElementById('codeInput').value;
+                if (!code.trim()) {
+                    alert('Please enter some code to analyze!');
+                    return;
+                }
+                
+                const resultDiv = document.getElementById('result');
+                const resultContent = document.getElementById('resultContent');
+                
+                try {
+                    resultContent.innerHTML = 'Analyzing...';
+                    resultDiv.style.display = 'block';
+                    
+                    const formData = new FormData();
+                    const blob = new Blob([code], { type: 'text/plain' });
+                    formData.append('file', blob, 'code.py');
+                    
+                    const response = await fetch('/analyze/', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        resultContent.innerHTML = `
+                            <h4>🎯 Verdict: ${result.verdict}</h4>
+                            <p><strong>Score:</strong> ${result.score}/10</p>
+                            <p><strong>Explanation:</strong> ${result.verdict_explanation}</p>
+                            <h4>💡 Feedback:</h4>
+                            <ul>
+                                ${result.feedback.map(f => `<li>${f}</li>`).join('')}
+                            </ul>
+                        `;
+                    } else {
+                        resultContent.innerHTML = `<p style="color: #ff6b6b;">Error: ${result.error}</p>`;
+                    }
+                } catch (error) {
+                    resultContent.innerHTML = `<p style="color: #ff6b6b;">Error: ${error.message}</p>`;
+                }
+            }
+        </script>
+    </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content)
 
 @app.post("/analyze/")
 async def analyze_file(file: UploadFile = File(...)):
@@ -91,7 +116,7 @@ async def analyze_file(file: UploadFile = File(...)):
     
     # Analyze the code
     try:
-        result = analyze_code(code)
+        result = analyzer.analyze_code(code)
         return JSONResponse(content=result)
     except Exception as e:
         return JSONResponse(
