@@ -1,127 +1,122 @@
-# 🧪 CodeLi**A modern, interactive web application that performs comprehensive code quality analysis with beautiful visualizations and detailed metrics.**
-
-## 🚀 **Live Demo**
-
-### **✨ Try CodeLitmus Now - No Installation Required!**
-
 <div align="center">
 
-### **🌐 [**LIVE WEBSITE - codelitmus.onrender.com**](https://codelitmus.onrender.com)**
+# 🧪 **CodeLitmus** 
+## *Advanced Code Quality Analyzer*
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Now-success?style=for-the-badge&logo=render)](https://codelitmus.onrender.com)
-[![Hosted on](https://img.shields.io/badge/Hosted_on-Render-9f40ff?style=flat-square&logo=render)](https://render.com)
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=28&duration=3000&pause=1000&color=36BCF7&center=true&vCenter=true&width=600&lines=🚀+Analyze+Code+Quality;✨+Beautiful+Animations;📊+Detailed+Metrics;🌐+Live+Demo+Available!" alt="Typing SVG" />
 
-**🎯 Instantly analyze your code quality with beautiful animations and detailed metrics!**
+[![Live Demo](https://img.shields.io/badge/🌐_LIVE_DEMO-Try_Now!-FF6B6B?style=for-the-badge&logoColor=white)](https://codelitmus.onrender.com)
+[![GitHub](https://img.shields.io/badge/GitHub-View_Source-181717?style=for-the-badge&logo=github)](https://github.com/prathamesh9930/CodeLitmus)
+
+![CodeLitmus Banner](https://img.shields.io/badge/CodeLitmus-Code%20Quality%20Analyzer-4ECDC4?style=for-the-badge&logo=python&logoColor=white)
+
+[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Latest-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Render](https://img.shields.io/badge/Hosted_on-Render-46E3B7?style=flat-square&logo=render&logoColor=white)](https://render.com)
+[![License](https://img.shields.io/badge/License-MIT-FFC107?style=flat-square)](LICENSE)
 
 </div>
 
 ---
 
-**Quick Navigation:**
-[🖼️ Screenshots](#-screenshots) • [📖 API Reference](#-api-reference) • [🛠️ Installation](#-installation) • [🤝 Contributing](#-contributing)
+## 🎯 **What is CodeLitmus?**
 
-</div>
+**CodeLitmus** is a beautiful, modern web application that analyzes your code quality with stunning visualizations and comprehensive metrics. Built with **FastAPI** and featuring gorgeous animations, it makes code analysis both powerful and enjoyable!
 
----Advanced Code Quality Analyzer
+---
+
+## 🚀 **✨ LIVE DEMO - Try It Now!**
 
 <div align="center">
 
-![CodeLitmus Banner](https://img.shields.io/badge/CodeLitmus-Code%20Quality%20Analyzer-blue?style=for-the-badge&logo=python)
+### **🌟 No Installation Required - Just Click & Analyze!**
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue?style=flat-square&logo=python)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](CONTRIBUTING.md)
+[![Launch Live Demo](https://img.shields.io/badge/🚀_LAUNCH_LIVE_DEMO-codelitmus.onrender.com-FF6B6B?style=for-the-badge&logoColor=white&logo=rocket)](https://codelitmus.onrender.com)
 
-**A modern, interactive web application that performs comprehensive code quality analysis with beautiful visualizations and detailed metrics.**
+**💡 Experience the full power of CodeLitmus instantly!**
 
-[�️ Screenshots](#-screenshots) • [📖 API Reference](#-api-reference) • [🛠️ Installation](#-installation) • [🤝 Contributing](#-contributing)
+🎨 **Beautiful Gradient Animations** • 📱 **Mobile Responsive** • ⚡ **Lightning Fast Analysis**
 
 </div>
 
 ---
 
-## ✨ Features
+## ✨ **Features That Make CodeLitmus Special**
+
+<table>
+<tr>
+<td width="50%">
 
 ### 🎯 **Core Functionality**
-- **🔍 Multi-Language Support**: Analyze Python, JavaScript, TypeScript, Java, C++, C, and C# files
-- **📊 Comprehensive Metrics**: Cyclomatic complexity, maintainability index, and comment coverage
-- **🏆 Smart Verdict System**: Get clear ratings (Basic/Neutral/Acidic) with detailed explanations
-- **📈 Visual Progress Indicators**: Beautiful progress bars and animated feedback
+- 🔍 **Multi-Language Support** - Python, JavaScript, TypeScript, Java, C++, C, C#
+- 📊 **Comprehensive Metrics** - Cyclomatic complexity, maintainability index
+- 🏆 **Smart Verdict System** - Clear ratings with detailed explanations
+- 📈 **Visual Progress Indicators** - Beautiful progress bars and feedback
+
+</td>
+<td width="50%">
 
 ### 🎨 **Modern UI/UX**
-- **🌈 Gradient Animations**: Eye-catching rainbow gradient title with pulse effects
-- **🌙 Dark/Light Mode**: Seamless theme switching for comfortable viewing
-- **📱 Responsive Design**: Perfect experience on desktop, tablet, and mobile
-- **🎭 Interactive Animations**: Hover effects, smooth transitions, and engaging feedback
+- 🌈 **Gradient Animations** - Eye-catching rainbow effects
+- 🌙 **Dark/Light Mode** - Seamless theme switching
+- 📱 **Responsive Design** - Perfect on all devices
+- 🎭 **Interactive Animations** - Hover effects and smooth transitions
+
+</td>
+</tr>
+</table>
 
 ### 🚀 **Advanced Features**
-- **📄 PDF Report Generation**: Download comprehensive analysis reports
-- **📂 Drag & Drop Upload**: Intuitive file upload with progress tracking
-- **⚡ Real-time Analysis**: Instant feedback with loading animations
-- **🔄 Progressive Layout**: Dynamic interface that adapts during analysis
+- 📄 **PDF Report Generation** - Download comprehensive analysis reports
+- 📂 **Drag & Drop Upload** - Intuitive file upload with progress tracking
+- ⚡ **Real-time Analysis** - Instant feedback with loading animations
+- 🎨 **Glassmorphism Design** - Modern aesthetic with backdrop blur effects
 
 ---
 
-## 🖼️ Screenshots
+## 🖼️ **Screenshots**
 
 <div align="center">
 
-### 🏠 Main Interface
-*Modern CodeLitmus interface with rainbow gradient title and glassmorphism effects*
-![Main Interface](screenshots/main-interface.png)
+### 🌟 **Main Interface**
+*Beautiful gradient background with floating animations*
 
-### 📂 File Upload
-*Drag & drop file upload with animated progress indicators*
-![File Upload](screenshots/file-upload.png)
+### 📊 **Analysis Results** 
+*Comprehensive metrics with visual progress indicators*
 
-### 📊 Analysis Results
-*Comprehensive code analysis with detailed metrics and visual feedback*
-
-*Detailed metrics breakdown with color-coded feedback*
-![Analysis Results Detailed](screenshots/analysis-results-detailed.png)
-
-*Advanced metrics analysis with professional insights*
-![Analysis Results Metrics](screenshots/analysis-results-metrics.png)
-
-### 📱 Mobile Responsive
-*Perfect mobile experience with touch-friendly interface*
-![Mobile View](screenshots/mobile-responsive.png)
+### 📱 **Mobile Experience**
+*Perfectly responsive design for all devices*
 
 </div>
 
 ---
 
-## 🛠️ Installation
+## 🛠️ **Quick Installation**
 
-### Prerequisites
-- **Python 3.8+** 
-- **pip** (Python package installer)
-- **Git** (for cloning the repository)
+### **Prerequisites**
+- Python 3.8+
+- pip (Python package installer)
 
-### Quick Start
+### **🚀 Get Started in 30 Seconds**
 
 ```bash
 # 1️⃣ Clone the repository
 git clone https://github.com/prathamesh9930/CodeLitmus.git
 cd CodeLitmus
 
-# 2️⃣ Navigate to backend directory
+# 2️⃣ Navigate to backend
 cd backend
 
 # 3️⃣ Install dependencies
 pip install -r requirements.txt
 
-# 4️⃣ Run the application
+# 4️⃣ Launch the app
 python app.py
-# OR using uvicorn directly
-uvicorn app:app --reload --host 0.0.0.0 --port 8000
 
-# 5️⃣ Open your browser
-# Visit: http://localhost:8000
+# 5️⃣ Open browser → http://localhost:8000
 ```
 
-### 🐳 Docker Setup (Optional)
+### **🐳 Docker Setup (Optional)**
 
 ```bash
 # Build and run with Docker
@@ -131,31 +126,7 @@ docker run -p 8000:8000 codelitmus
 
 ---
 
-## 🎮 Usage Guide
-
-### � **Uploading Files**
-1. **Drag & Drop**: Simply drag your code file onto the upload area
-2. **Browse**: Click to open file browser and select your file
-3. **Support**: `.py`, `.js`, `.ts`, `.java`, `.cpp`, `.c`, `.cs` files supported
-4. **Progress**: Watch the upload progress with animated indicators
-
-### 🔬 **Code Analysis**
-1. **Automatic Processing**: Files are analyzed immediately after upload
-2. **Comprehensive Results**: Get detailed breakdown of:
-   - **🔄 Complexity Analysis**: Function-level complexity metrics
-   - **🔧 Maintainability Score**: Overall code maintainability (0-100)
-   - **💬 Comment Coverage**: Documentation quality assessment
-   - **✅ Strengths**: What your code does well
-   - **🔧 Improvements**: Specific areas for enhancement
-
-### 📄 **PDF Reports**
-1. **One-Click Download**: Generate professional PDF reports
-2. **Clean Formatting**: Optimized layout with proper spacing
-3. **Comprehensive Data**: All metrics and recommendations included
-
----
-
-## 🏗️ Project Architecture
+## 🏗️ **Project Architecture**
 
 ```
 CodeLitmus/
@@ -164,70 +135,84 @@ CodeLitmus/
 │   ├── 🧠 analyzer.py            # Core analysis engine
 │   ├── 📋 requirements.txt       # Python dependencies
 │   ├── 🎨 static/
-│   │   └── style.css            # Enhanced styling & animations
+│   │   └── style.css            # Beautiful animations & styling
 │   ├── 🖼️ templates/
 │   │   └── index.html           # Modern responsive interface
 │   └── 📁 uploads/              # File storage directory
-├── 🌐 frontend/                  # Legacy frontend (reference)
-├── 📖 README.md                  # This file
-└── 📜 requirements.txt           # Root dependencies
+├── 🌐 render.yaml               # Render deployment config
+├── ⚡ start.sh                  # Render startup script
+├── 📸 screenshots/              # Project screenshots
+└── 📖 README.md                 # This file
 ```
 
 ---
 
-## 🔧 API Reference
+## 📊 **API Reference**
 
-### Core Endpoints
+### **Upload & Analyze Endpoint**
 
-| Method | Endpoint | Description | Response |
-|--------|----------|-------------|----------|
-| `GET` | `/` | Main application interface | HTML page |
-| `POST` | `/analyze/` | Analyze uploaded code file | JSON analysis results |
+```http
+POST /analyze/
+Content-Type: multipart/form-data
 
-### Analysis Response Format
+Parameters:
+- file: Upload file (Python, JS, TS, Java, C++, C, C#)
 
-```json
+Response:
 {
-  "verdict": "Basic|Neutral|Acidic",
-  "verdict_explanation": "Detailed explanation",
-  "score": "1-3 scale rating",
-  "feedback": ["Quick summary points"],
-  "detailed_feedback": {
-    "good_points": ["Strengths identified"],
-    "areas_for_improvement": ["Specific improvements"],
-    "metrics_explanation": {
-      "complexity": "Detailed complexity analysis",
-      "maintainability": "Maintainability insights", 
-      "comments": "Documentation assessment"
-    }
-  }
+  "verdict": "Excellent",
+  "score": 8.5,
+  "complexity": 3.2,
+  "maintainability": 85.4,
+  "comments": 15.8,
+  "verdict_explanation": "Your code demonstrates excellent quality...",
+  "feedback": ["Use more descriptive variable names", "..."]
 }
 ```
 
 ---
 
-## 📊 Quality Metrics Explained
+## 📊 **Quality Metrics Explained**
 
-### 🔄 **Cyclomatic Complexity**
-- **Scale**: 1-5 (Simple) | 6-10 (Moderate) | 11+ (Complex)
-- **Target**: < 5 for optimal maintainability
-- **Measures**: Decision points and code paths
+<div align="center">
 
-### 🔧 **Maintainability Index**
-- **Scale**: 0-49 (Poor) | 50-69 (Average) | 70-100 (Excellent)
-- **Target**: > 70 for good maintainability
-- **Factors**: Complexity, volume, and documentation
+| Metric | Scale | Target | Description |
+|--------|-------|--------|-------------|
+| **🔄 Cyclomatic Complexity** | 1-5 (Simple) \| 6-10 (Moderate) \| 11+ (Complex) | < 5 | Decision points and code paths |
+| **🔧 Maintainability Index** | 0-49 (Poor) \| 50-69 (Average) \| 70-100 (Excellent) | > 70 | Overall code maintainability |
+| **💬 Comment Coverage** | <10% (Poor) \| 10-20% (Good) \| >20% (Excellent) | > 10% | Documentation quality |
 
-### 💬 **Comment Coverage**
-- **Scale**: <10% (Poor) | 10-20% (Good) | >20% (Excellent)
-- **Target**: > 10% for adequate documentation
-- **Calculation**: Comments / Total lines of code
+</div>
 
 ---
 
-## 🛠️ Development
+## 🌐 **Live Deployment**
 
-### Running in Development Mode
+### 🚀 **Production Instance**
+
+**🔗 Live URL:** [https://codelitmus.onrender.com](https://codelitmus.onrender.com)
+
+### ⚡ **Deployment Features**
+- ✅ **Free Hosting** - Powered by Render's free tier
+- ✅ **Auto-Deploy** - Automatic deployments from GitHub
+- ✅ **HTTPS Enabled** - Secure SSL certificate included
+- ✅ **All Animations Preserved** - Full UI/UX experience maintained
+
+### 🛠️ **Deploy Your Own Instance**
+
+1. **Fork this repository**
+2. **Sign up at [render.com](https://render.com)**
+3. **Connect your GitHub repository**
+4. **Use these settings:**
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `cd backend && uvicorn app:app --host 0.0.0.0 --port $PORT`
+5. **Deploy!** - Your instance will be live in minutes
+
+---
+
+## 🛠️ **Development**
+
+### **Running in Development Mode**
 
 ```bash
 # Enable auto-reload for development
@@ -237,7 +222,7 @@ uvicorn app:app --reload --port 8000
 uvicorn app:app --reload --log-level debug
 ```
 
-### 🧪 Testing
+### **🧪 Testing**
 
 ```bash
 # Run tests (when implemented)
@@ -250,45 +235,11 @@ black backend/
 
 ---
 
-## 🌐 Deployment
+## 🤝 **Contributing**
 
-### 🚀 **Live Production Deployment**
+We welcome contributions! 🎉
 
-CodeLitmus is currently deployed and running live on **Render**:
-
-**🔗 Live URL:** [https://codelitmus.onrender.com](https://codelitmus.onrender.com)
-
-### ⚡ **Deployment Features**
-- ✅ **Free Hosting** - Powered by Render's free tier
-- ✅ **Auto-Deploy** - Automatic deployments from GitHub
-- ✅ **HTTPS Enabled** - Secure SSL certificate included
-- ✅ **All Animations Preserved** - Full UI/UX experience maintained
-- ✅ **Zero Configuration** - Ready to use, no setup required
-
-### 🛠️ **Deploy Your Own Instance**
-
-Want to deploy your own version? It's easy with Render:
-
-1. **Fork this repository**
-2. **Sign up at [render.com](https://render.com)**
-3. **Connect your GitHub repository**
-4. **Use these settings:**
-   - **Build Command:** `pip install -r requirements.txt`
-   - **Start Command:** `cd backend && uvicorn app:app --host 0.0.0.0 --port $PORT`
-5. **Deploy!** - Your instance will be live in minutes
-
-### 📈 **Performance Notes**
-- **Cold Start:** First visit may take 10-15 seconds (free tier limitation)
-- **Active Performance:** Lightning fast once warmed up
-- **Uptime:** 24/7 availability with automatic restarts
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### 🚀 **Quick Contribution Steps**
+### **🚀 Quick Contribution Steps**
 1. **Fork** the repository
 2. **Create** a feature branch (`git checkout -b feature/AmazingFeature`)
 3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
@@ -297,24 +248,24 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 ---
 
-## 📋 Dependencies
+## 📋 **Dependencies**
 
-### Core Technologies
+### **Core Technologies**
 - **[FastAPI](https://fastapi.tiangolo.com/)** - Modern, fast web framework
 - **[Uvicorn](https://www.uvicorn.org/)** - Lightning-fast ASGI server
 - **[Radon](https://radon.readthedocs.io/)** - Code metrics analysis engine
 - **[Jinja2](https://jinja.palletsprojects.com/)** - Powerful template engine
 
-### Frontend Libraries
+### **Frontend Libraries**
 - **[jsPDF](https://github.com/parallax/jsPDF)** - PDF generation
 - **Vanilla JavaScript** - No framework dependencies
 - **CSS3** - Modern styling with animations
 
 ---
 
-## 🐛 Troubleshooting
+## 🐛 **Troubleshooting**
 
-### Common Issues
+<div align="center">
 
 | Issue | Solution |
 |-------|----------|
@@ -323,15 +274,17 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 | **File upload fails** | Check file size (<5MB) and format |
 | **Analysis stuck** | Refresh page and try smaller file |
 
+</div>
+
 ---
 
-## 📜 License
+## 📜 **License**
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🙏 Acknowledgments
+## 🙏 **Acknowledgments**
 
 - **Radon** team for excellent code metrics library
 - **FastAPI** community for the amazing framework
@@ -341,14 +294,15 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 <div align="center">
 
-### 🌟 **Star this repository if you found it helpful!**
+## 🌟 **Star this repository if you found it helpful!**
 
 ### 🚀 **[Try Live Demo](https://codelitmus.onrender.com)** | **[View Source](https://github.com/prathamesh9930/CodeLitmus)**
 
 **Made with ❤️ by [Prathamesh](https://github.com/prathamesh9930)**
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-codelitmus.onrender.com-success?style=flat-square)](https://codelitmus.onrender.com)
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-codelitmus.onrender.com-FF6B6B?style=for-the-badge&logoColor=white)](https://codelitmus.onrender.com)
+[![GitHub Stars](https://img.shields.io/github/stars/prathamesh9930/CodeLitmus?style=for-the-badge&logo=github)](https://github.com/prathamesh9930/CodeLitmus/stargazers)
 
-[⬆ Back to top](#-codelitmus---advanced-code-quality-analyzer)
+[⬆ Back to top](#-codelitmus)
 
 </div>
