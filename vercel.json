@@ -1,0 +1,19 @@
+{
+  "builds": [
+    {
+      "src": "vercel_app.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "vercel_app.py"
+    }
+  ],
+  "functions": {
+    "vercel_app.py": {
+      "includeFiles": "backend/**"
+    }
+  }
+}
