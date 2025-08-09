@@ -88,9 +88,9 @@
 ### 📊 **Analysis Results** 
 *Comprehensive metrics with visual progress indicators*
 
-<img src="screenshots/analysis-results.png" alt="Analysis Results Overview" width="700">
-
 <img src="screenshots/analysis-results-detailed.png" alt="Detailed Analysis Results" width="700">
+
+
 
 <img src="screenshots/analysis-results-metrics.png" alt="Analysis Metrics" width="700">
 
