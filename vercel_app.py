@@ -7,9 +7,18 @@ import os
 import sys
 
 # Add backend to Python path
-sys.path.append(os.path.join(os.path.dirname(__file__), 'backend'))
+backend_path = os.path.join(os.path.dirname(__file__), 'backend')
+if backend_path not in sys.path:
+    sys.path.insert(0, backend_path)
 
-from analyzer import analyze_code
+# Import after adding to path
+try:
+    from analyzer import analyze_code
+except ImportError:
+    # Fallback import
+    sys.path.append('backend')
+    from analyzer import analyze_code
+
 from mangum import Mangum
 
 app = FastAPI()
@@ -24,20 +33,37 @@ app.add_middleware(
 )
 
 # Simple path handling for Vercel
+templates = None
 try:
-    app.mount("/static", StaticFiles(directory="backend/static"), name="static")
-    templates = Jinja2Templates(directory="backend/templates")
+    # Check if backend directory exists
+    if os.path.exists("backend/static"):
+        app.mount("/static", StaticFiles(directory="backend/static"), name="static")
+    else:
+        print("Static directory not found")
+    
+    if os.path.exists("backend/templates"):
+        templates = Jinja2Templates(directory="backend/templates")
+    else:
+        print("Templates directory not found")
+        # Try alternative path
+        templates = Jinja2Templates(directory="./backend/templates")
 except Exception as e:
     print(f"Error mounting static files: {e}")
     # Fallback
-    templates = Jinja2Templates(directory="./backend/templates")
+    try:
+        templates = Jinja2Templates(directory="./backend/templates")
+    except:
+        templates = None
 
 # Create uploads directory
 os.makedirs("backend/uploads", exist_ok=True)
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    if templates:
+        return templates.TemplateResponse("index.html", {"request": request})
+    else:
+        return HTMLResponse("<h1>CodeLitmus</h1><p>Templates not found. Please check deployment.</p>")
 
 @app.post("/analyze/")
 async def analyze_file(file: UploadFile = File(...)):
